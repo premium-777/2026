@@ -2,168 +2,199 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TOP SECRET | MISSION 2025</title>
     <style>
         @import url('fonts.googleapis.com');
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #0a0a0a;
-            color: #00ff41; /* Цвет классического матричного терминала */
+            color: #00ff41;
             font-family: 'Courier Prime', monospace;
+            margin: 0;
+            padding: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            overflow: hidden;
         }
 
         .folder {
-            width: 90%;
-            max-width: 600px;
-            border: 2px solid #00ff41;
-            padding: 30px;
-            background: rgba(0, 50, 0, 0.1);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid #00ff41;
+            padding: 20px;
+            background: rgba(0, 30, 0, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
             position: relative;
+            overflow: hidden;
         }
 
-        .header {
-            text-align: center;
-            border-bottom: 2px solid #00ff41;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-        }
-
+        /* Красный штамп адаптирован под мобилки */
         .stamp {
             position: absolute;
-            top: 20px;
-            right: -20px;
-            border: 4px solid #ff4444;
+            top: 10px;
+            right: 5px;
+            border: 3px solid #ff4444;
             color: #ff4444;
-            padding: 5px 10px;
+            padding: 3px 8px;
             font-weight: bold;
             transform: rotate(15deg);
             text-transform: uppercase;
-            opacity: 0.8;
+            font-size: 0.8rem;
+            z-index: 10;
+            background: rgba(10, 10, 10, 0.8);
+        }
+
+        .header {
+            text-align: left;
+            border-bottom: 1px solid #00ff41;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+        }
+
+        h1 {
             font-size: 1.2rem;
+            margin: 0;
+            padding-right: 60px; /* Чтобы не наезжать на штамп */
+        }
+
+        .status {
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .content {
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
 
         .label {
             color: #888;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-
-        .content {
-            line-height: 1.6;
-        }
-
-        .blink {
-            animation: blinker 1s linear infinite;
-        }
-
-        @keyframes blinker {
-            50% { opacity: 0; }
+            font-size: 0.7rem;
+            display: block;
+            margin-top: 10px;
         }
 
         .mission-objective {
-            background: rgba(0, 255, 65, 0.1);
-            padding: 15px;
-            margin-top: 20px;
-            border-left: 5px solid #00ff41;
+            background: rgba(0, 255, 65, 0.05);
+            padding: 12px;
+            margin: 15px 0;
+            border-left: 3px solid #00ff41;
+            font-size: 0.85rem;
         }
 
-        .footer {
-            margin-top: 30px;
-            font-size: 0.7rem;
-            text-align: center;
-            color: #444;
+        ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        li {
+            margin-bottom: 8px;
         }
 
         .btn-confirm {
             display: block;
             width: 100%;
             background: #00ff41;
-            color: black;
+            color: #000;
             text-align: center;
-            padding: 10px;
+            padding: 15px;
             margin-top: 20px;
             text-decoration: none;
             font-weight: bold;
-            text-transform: uppercase;
+            font-size: 0.9rem;
+            border: none;
             cursor: pointer;
+            text-transform: uppercase;
         }
 
-        .btn-confirm:hover {
-            background: #008f11;
+        .blink {
+            animation: blinker 1.5s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0.3; }
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.6rem;
+            text-align: center;
+            opacity: 0.5;
+        }
+
+        /* Эффект шума на фоне */
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('upload.wikimedia.org');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 100;
         }
     </style>
 </head>
 <body>
+    <div class="noise"></div>
 
     <div class="folder">
-        <div class="stamp">Top Secret</div>
+        <div class="stamp">TOP SECRET</div>
         
         <div class="header">
-            <h1>МИССИЯ: "НОВОГОДНИЙ УЖИН"</h1>
-            <p>Статус: <span class="blink">АКТИВНО</span></p>
+            <h1 id="typewriter">МИССИЯ: "НОВОГОДНИЙ УЖИН"</h1>
+            <div class="status">СТАТУС: <span class="blink">АКТИВНО</span></div>
         </div>
 
         <div class="content">
-            <p><span class="label">ОПЕРАТИВНЫЙ ПСЕВДОНИМ:</span> Агент "Писярик"</p>
-            <p><span class="label">МЕСТО ДИСЛОКАЦИИ:</span> Где-то по делам</p>
-            <p><span class="label">ДАТА:</span> 31 декабря 2025 г.</p>
+            <span class="label">ОПЕРАТИВНЫЙ ПСЕВДОНИМ:</span> 
+            <div>Агент "Писярик"</div>
+            
+            <span class="label">ОБЪЕКТ:</span> 
+            <div>Рабочая зона (Офис)</div>
             
             <div class="mission-objective">
-                <strong>ПРИКАЗ ПО ШТАБУ:</strong>
-                <p>Для успешного перехода в 2026-й оперативный год, вам необходимо выполнить следующие задачи:</p>
+                <strong>ДИРЕКТИВА 2025-12-31:</strong>
                 <ol>
-                    <li>Проникнуть в винотеку и изъять <strong>одну бутылку вина</strong>.</li>
-                    <li>Используя зашифрованный канал связи, осуществить <strong>заказ сета роллов</strong> на домашний адрес.</li>
-                    <li>Доставить ресурсы и себя в штаб в целости и сохранности.</li>
+                    <li>Изъять <strong>бутылку вина</strong> для дезинфекции и празднования.</li>
+                    <li>Заказать <strong>сет роллов</strong> через терминал (прибытие к 19:00).</li>
+                    <li>Скрытно выдвинуться в сторону дома.</li>
                 </ol>
             </div>
-
-            <p style="margin-top: 20px;"><em>Внимание: Праздничное настроение является обязательным условием выполнения миссии.</em></p>
+            
+            <p style="font-size: 0.8rem; color: #888;">* Сообщение зашифровано протоколом любви.</p>
         </div>
 
-        <a class="btn-confirm" onclick="acceptMission()">ПОДТВЕРДИТЬ ПРИЕМ ЗАДАНИЯ</a>
+        <button class="btn-confirm" onclick="acceptMission()">ПОДТВЕРДИТЬ ЗАДАНИЕ</button>
 
         <div class="footer">
-            Данное сообщение самоликвидируется после прочтения (или когда вино будет выпито).
+            ID: 8841-SECRET-2025<br>
+            НЕ ДЛЯ РАСПРОСТРАНЕНИЯ ТРЕТЬИМ ЛИЦАМ
         </div>
     </div>
 
     <script>
+        // Эффект печати для заголовка
+        const el = document.getElementById('typewriter');
+        const text = el.innerText;
+        el.innerText = '';
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                el.innerText += text.charAt(i);
+                i++;
+                setTimeout(type, 80);
+            }
+        }
+        window.onload = type;
+
         function acceptMission() {
-            alert('Задание принято, агент Писярик! Жду тебя дома. Конец связи.');
+            alert('Задание принято! Жду тебя, любимая. Будь осторожна на пути в штаб!');
         }
     </script>
-    <script>
-    // Добавим эффект печатающегося текста для заголовка
-    const header = document.querySelector('h1');
-    const text = header.innerText;
-    header.innerText = '';
-    let i = 0;
-
-    function typeWriter() {
-        if (i < text.length) {
-            header.innerText += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 100);
-        }
-    }
-    
-    window.onload = typeWriter;
-
-    function acceptMission() {
-        const btn = document.querySelector('.btn-confirm');
-        btn.innerText = "ДОСТУП РАЗРЕШЕН. ЖДУ ДОМА.";
-        btn.style.background = "#ffffff";
-        alert('Задание принято, агент Писярик! Жду тебя дома. Конец связи.');
-    }
-</script>
 </body>
 </html>
