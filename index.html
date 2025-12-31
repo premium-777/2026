@@ -141,5 +141,29 @@
             alert('Задание принято, агент Писярик! Жду тебя дома. Конец связи.');
         }
     </script>
+    <script>
+    // Добавим эффект печатающегося текста для заголовка
+    const header = document.querySelector('h1');
+    const text = header.innerText;
+    header.innerText = '';
+    let i = 0;
+
+    function typeWriter() {
+        if (i < text.length) {
+            header.innerText += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 100);
+        }
+    }
+    
+    window.onload = typeWriter;
+
+    function acceptMission() {
+        const btn = document.querySelector('.btn-confirm');
+        btn.innerText = "ДОСТУП РАЗРЕШЕН. ЖДУ ДОМА.";
+        btn.style.background = "#ffffff";
+        alert('Задание принято, агент Писярик! Жду тебя дома. Конец связи.');
+    }
+</script>
 </body>
 </html>
